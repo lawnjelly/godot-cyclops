@@ -19,9 +19,27 @@ The convex hull forming the room is defined by the geometry, in this case MeshIn
 
 The MeshInstances you place within rooms should be _static_, that is, they are not expected to move as you play the game level.
 
-Rooms start their lives simply as a Spatial. But they have a very specific naming convention, they should start with the prefix `room_`, followed by the name that want to give the room. e.g. `room_lounge`, or `room_kitchen`.
+Rooms start their lives simply as a Spatial. But they have a very specific naming convention, they should start with the prefix `room_`, followed by the name that want to give the room. e.g. `room_lounge`, or `room_kitchen`. They must go through a conversion process (see later) to turn them into LRooms that have been prepared for rendering.
 
 ### LPortal
 When you are in a room, you can see pretty much everything that is in the room in front of you. The fun comes when we want to look into adjacent rooms. Instead of defining occluders, such as walls, to block visibility, we take the opposite approach, and define portals, which are like doors or windows that we can see through. All other walls of the room are considered opaque.
 
-A portal is essentially just a convex polygon, with all the points approximately in the same plane. In many cases a Godot plane can be used as a portal.
+A portal is essentially just a convex polygon, with all the points approximately in the same plane. In many cases a Godot plane can be used as a portal. Portals start their life as a simple MeshInstance, with another naming convention: Their prefix should be `portal_` followed by the room that they link (see) into. e.g. `portal_kitchen`.
+
+Portals should be children of rooms. Typically there will be one or more portals leading out of each room. Incidentally, you only need to create one portal between each pair of linked rooms. The system will automatically make it two way.
+
+Portals must also be converted to become ready for use - they are converted from MeshInstances to LPortals.
+
+### LRoomManager
+Finally the LRoomManager is the brains of the whole operation. It contains the settings you wish to use, and enables you to convert the level to prepare it for use, either in the editor or at runtime. In order for the system to work, the room manager needs you to assign some nodes:
+
+* `Rooms` - this is the roomlist, the Spatial you have decided to hang your rooms as children from.
+* `Camera` - this is the camera which occlusion will be calculated from.
+* `Dobs` - this stands for dynamic objects. This allows dynamic objects to be occluded in the system, see below.
+
+## Dobs
+
+
+
+
+
