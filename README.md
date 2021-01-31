@@ -38,8 +38,20 @@ Finally the LRoomManager is the brains of the whole operation. It contains the s
 * `Dobs` - this stands for dynamic objects. This allows dynamic objects to be occluded in the system, see below.
 
 ## Dobs
+To make things as simple as possible, you can assign a branch of the scene tree under which you will place all your dynamic (moving) MeshInstances. They will automatically be found and occluded as part of the system. It is as simple as that. The only gotcha is that this branch should NOT be in one of the rooms (which are for static objects only).
 
+## Typical Usage
+Most of the effort involved is in setting up your scene. You should group your static objects into rooms, children of the node you want to be your roomlist. Rooms will typically contain walls, floors, ceilings, tables, chairs etc. Maybe there is no ceiling if you can see the sky above.
+You would then place portal meshes over windows / doors. This can be done either in the Godot IDE, or in a modelling package such as Blender. Simple plane MeshInstances will often do the job. Remember to name the rooms and portals correctly, as described earlier.
 
+Make sure to save your work, and keep backups. It is often useful to work on an unconverted scene (i.e. before LRooms and LPortals have been converted), and do conversion as you go along, just for testing and final exports.
 
+To convert the scene for occlusion culling, select the LRoomManager in the IDE, and a new button at the top of the 3d window should appear, titled `Convert Rooms`. Press this. This will log some output text to describe the process (look for any errors), and hopefully you should end up with some LRooms and LPortals.
 
+You can preview the occlusion system in the editor. Make sure the camera you want to use is assigned (in the room manager), and switch the LRoomManager to `Active` in the inspector. Now if you move or rotate the camera, you should see objects occlusion culled. If you deactivate the room manager they will all be shown again.
+
+## Final versions in game
+You can either load your scene file for the final game prior, or post conversion, however, you will always need to run convert again when you load the level, because some of the necessary data is not saved, and needs to be created immediately prior to use. You would do this in game by calling the `rooms_convert` function of the LRoomManager.
+
+One last thing, when changing level in your game, be sure to call `rooms_clear` prior to unloading the previous level, and before closing the game (although you may be able to get away without this last step). This both clears out the data and memory used by the previous level, but it is also important to do because Cyclops maintains unsafe pointers to objects in memory, for speed, and clearing these will prevent any risk of crashes.
 
