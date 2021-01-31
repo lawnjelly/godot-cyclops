@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="LRoom" inherits="Spatial" version="3.2">
+	<brief_description>
+		Room in the cyclops visibility system.
+	</brief_description>
+	<description>
+		LRooms are the primary building blocks of levels. Their geometry should form an approximate convex hull, and will be defined by the static MeshInstances you add as children and grandchildren of the LRoom node.
+		In order to see into adjacent rooms, you will need to place portals, which are like windows and doors that the system will see through.
+		In the LRoomManager conversion step, rooms are identified as Spatials with a name prefixed by 'room_'.
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
+	<constants>
+	</constants>
+</class>

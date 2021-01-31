@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="CyclopsGizmoPlugin" inherits="EditorSpatialGizmoPlugin" version="3.2">
+	<brief_description>
+		Cyclops visibility system plugin.
+	</brief_description>
+	<description>
+		Provides visualization of room convex hulls.
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
+	<constants>
+	</constants>
+</class>

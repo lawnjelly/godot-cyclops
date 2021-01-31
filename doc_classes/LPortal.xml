@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="LPortal" inherits="MeshInstance" version="3.2">
+	<brief_description>
+		LPortals allow visibility from room to room in the Cyclops visibility system.
+	</brief_description>
+	<description>
+		When building a level, portals are simply MeshInstances that should be a convex polygon facing outward from a room, that cover a window or doorway. They should be named with the prefix 'portal_' followed by the name of the room they lead to. e.g. 'portal_lounge'.
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+	</methods>
+	<members>
+		<member name="linked_room" type="NodePath" setter="set_linked_room" getter="get_linked_room" default="NodePath(&quot;&quot;)">
+			The room that the portal will link to.
+		</member>
+		<member name="portal_active" type="bool" setter="set_portal_active" getter="get_portal_active" default="true">
+			This can allow turning on and off visibility through e.g. doorways at runtime, as doors are closed.
+		</member>
+	</members>
+	<constants>
+	</constants>
+</class>

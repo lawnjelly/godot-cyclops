@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="LRoomManager" inherits="Spatial" version="3.2">
+	<brief_description>
+		Cyclops visibility manager
+	</brief_description>
+	<description>
+		Cyclops is a room/portal based occlusion culling solution.
+		The room manager prepares rooms and portals for rendering, and manages the visibility of static and dynamic objects.
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="rooms_clear">
+			<return type="void">
+			</return>
+			<description>
+				Deletes all visibility data in preparation for shutdown or loading a new level.
+			</description>
+		</method>
+		<method name="rooms_convert">
+			<return type="void">
+			</return>
+			<description>
+				Prepares rooms and portals for rendering. Spatials with the prefix 'room_' will be converted to LRooms, and MeshInstances with the prefix 'portal_' will be converted to portals.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="active" type="bool" setter="rooms_set_active" getter="rooms_get_active" default="false">
+			Turns on and off the visibility system, in the editor and at runtime.
+		</member>
+		<member name="camera" type="NodePath" setter="set_camera_path" getter="get_camera_path" default="NodePath(&quot;&quot;)">
+			Sets the camera to be used to determine occlusion from. This need not be the same as the current camera (although it usually is).
+		</member>
+		<member name="dobs" type="NodePath" setter="set_dobs_path" getter="get_dobs_path" default="NodePath(&quot;&quot;)">
+			Any MeshInstances placed below this branch of the scene tree will have their visibility managed by the system. This branch should not be in one of the rooms.
+		</member>
+		<member name="reverse_portals" type="bool" setter="set_portal_plane_convention" getter="get_portal_plane_convention" default="false">
+			Usually you would build portal planes pointing outward from the room they link from. But in case you get it backwards, you can flip the convention. Try this if you cannot see properly through portals.
+		</member>
+		<member name="rooms" type="NodePath" setter="set_rooms_path" getter="get_rooms_path" default="NodePath(&quot;&quot;)">
+			This should be a spatial in the scene tree that you intend to hang your rooms as children of. It is usually referred to as the 'roomlist'.
+		</member>
+		<member name="show_debug" type="bool" setter="set_show_debug" getter="get_show_debug" default="true">
+			Show portal meshes and any other graphical debugging. You should turn this off for final exports.
+		</member>
+	</members>
+	<constants>
+	</constants>
+</class>
