@@ -9,6 +9,14 @@ I originally wrote LPortal a year and a half ago, which is a fully featured room
 
 Quite a lot is cut out from the original LPortal, most significantly, Cyclops does not fully support dynamic lights and shadows. It is designed to be used with baked lighting, such as lightmaps. Luckily, we have recently merged JFons more capable lightmapper into Godot core, so this has become a more practical undertaking. In addition, you can also use this module in conjunction with my lightmapping module, LLightmap. Indeed you are likely to get the best results in terms of performance using LLightmap rather than the core lightmapper.
 
+## Installation
+1) Use the instructions here to download and compile Godot: \
+https://docs.godotengine.org/en/3.2/development/compiling/index.html
+
+2) Download this repository, and create a new folder in the modules directory called 'cyclops'. Unzip the repository into this folder.
+
+3) Recompile. Note that for exports you will need to compile the export template for the platform you want to export to (e.g. android if you are intending to export to android).
+
 ## Components of Cyclops
 Cyclops introduces 3 new Godot nodes, LRoom, LPortal and LRoomManager.
 
