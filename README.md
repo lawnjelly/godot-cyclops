@@ -17,6 +17,9 @@ https://docs.godotengine.org/en/3.2/development/compiling/index.html
 
 3) Recompile. Note that for exports you will need to compile the export template for the platform you want to export to (e.g. android if you are intending to export to android).
 
+## Tutorial
+https://www.youtube.com/watch?v=6O1j6CMVdGA
+
 ## Components of Cyclops
 Cyclops introduces 3 new Godot nodes, LRoom, LPortal and LRoomManager.
 
