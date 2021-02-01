@@ -1,6 +1,6 @@
-# godot-cyclops 0.10
+# godot-cyclops 0.11
 Portal occlusion culling for Godot Engine 3.2
-Jan 31st 2021
+Feb 1st 2021
 
 Cyclops is a simple room / portal occlusion culling system for Godot Engine, written as a module. It must be compiled with the engine (soon I hope to make some precompiled builds).
 
@@ -26,7 +26,7 @@ Cyclops introduces 3 new Godot nodes, LRoom, LPortal and LRoomManager.
 ### LRoom
 The most basic unit of the system is the room. In a first person shooter this would roughly correspond to real world rooms. In an outdoor game a room might be part of a valley for instance. There is one caveat - rooms must be convex. If you want to make a concave area you should build it out of two or more convex LRooms.
 
-The convex hull forming the room is defined by the geometry, in this case MeshInstances, that you place as children and grandchildren of the room. The convex hull is used to decide when an object (such as the camera) is within a room, because it can be done simply with a series of plane checks.
+The convex hull forming the room is usually defined by the geometry, in this case MeshInstances, that you place as children and grandchildren of the room. You can also optionally specify the convex hull manually by having a MeshInstance child with the name prefix `bound_`. The convex hull is used to decide when an object (such as the camera) is within a room, because it can be done simply with a series of plane checks.
 
 The MeshInstances you place within rooms should be _static_, that is, they are not expected to move as you play the game level.
 
