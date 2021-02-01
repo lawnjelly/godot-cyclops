@@ -41,6 +41,8 @@ Portals should be children of rooms. Typically there will be one or more portals
 
 Portals must also be converted to become ready for use - they are converted from MeshInstances to LPortals.
 
+_Note : Godot does not allow two or more nodes in the scene tree to share the same name. This is a problem when you want more than one portal to lead into a room. This is solved using a wildcard in the name. Anything including and after the character '*' will be ignored. So you can have e.g. `portal_lounge*1`, `portal_lounge*2`, and this will be interpretted as `portal_lounge` in both cases._
+
 ### LRoomManager
 Finally the LRoomManager is the brains of the whole operation. It contains the settings you wish to use, and enables you to convert the level to prepare it for use, either in the editor or at runtime. In order for the system to work, the room manager needs you to assign some nodes:
 
