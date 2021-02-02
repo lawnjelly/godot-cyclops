@@ -1,6 +1,6 @@
 # godot-cyclops 0.12
-Portal occlusion culling for Godot Engine 3.2
-Feb 2nd 2021
+Portal occlusion culling for Godot Engine 3.2 \
+_Feb 2nd 2021_
 
 Cyclops is a simple room / portal occlusion culling system for Godot Engine, written as a module. It must be compiled with the engine (soon I hope to make some precompiled builds).
 
