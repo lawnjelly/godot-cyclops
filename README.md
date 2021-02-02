@@ -1,4 +1,4 @@
-# godot-cyclops 0.11
+# godot-cyclops 0.12
 Portal occlusion culling for Godot Engine 3.2
 Feb 1st 2021
 
