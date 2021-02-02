@@ -23,6 +23,7 @@
 #include "pcamera.h"
 #include "pdobs.h"
 #include "prooms.h"
+#include "prooms_lookup.h"
 #include "pstatics.h"
 #include "ptracer.h"
 #include "scene/3d/spatial.h"
@@ -44,6 +45,7 @@ public:
 	PCamera _camera;
 	PTracer _tracer;
 	PDobs _dobs;
+	PRoomsLookup _rooms_lookup;
 
 	// funcs
 	bool resolve_roomlist_path(Node *p_anynode);
@@ -62,6 +64,11 @@ public:
 	bool get_show_debug() const { return _show_debug; }
 
 	uint32_t get_tick() const { return _tick; }
+
+	// wrapper func
+	int find_room_within(const Vector3 &p_pos, int p_previous_room_id) const {
+		return _rooms_lookup.find_room_within(_rooms, p_pos, p_previous_room_id);
+	}
 
 	PRoomManager();
 

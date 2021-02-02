@@ -71,7 +71,7 @@ void PDobs::found_node(PRoomManager &p_room_manager, Spatial *p_node) {
 
 void PDobs::found_mesh_instance(PRoomManager &p_room_manager, MeshInstance *p_mi) {
 	// which room is it in?
-	int room_id = p_room_manager._rooms.find_room_within(p_mi->get_global_transform().origin, -1);
+	int room_id = p_room_manager.find_room_within(p_mi->get_global_transform().origin, -1);
 
 	// outside world. Cull? NYI
 	if (room_id == -1)

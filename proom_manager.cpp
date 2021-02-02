@@ -31,6 +31,7 @@ void PRoomManager::clear() {
 	_statics.clear();
 	_camera.clear();
 	_dobs.clear();
+	_rooms_lookup.clear();
 }
 
 void PRoomManager::frame_update(Node *p_any_node) {

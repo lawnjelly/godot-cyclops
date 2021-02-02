@@ -45,7 +45,7 @@ bool PCamera::update(const PRoomManager &p_room_manager) {
 	_planes[0] = Plane(_pos, _planes[0].normal);
 
 	// what room is the camera within
-	_room_ID = p_room_manager._rooms.find_room_within(_pos, _room_ID);
+	_room_ID = p_room_manager.find_room_within(_pos, _room_ID);
 
 	return true;
 }

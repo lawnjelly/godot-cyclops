@@ -62,4 +62,6 @@ public:
 	// planes forming convex hull of room
 	Lawn::LVector<Plane> _planes;
 	Geometry::MeshData _bound_mesh_data;
+	
+	AABB _aabb;
 };

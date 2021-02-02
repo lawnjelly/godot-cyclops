@@ -47,19 +47,3 @@ void PRooms::set_roomlist_node(Spatial *p_roomlist) {
 		LPRINT(2, "\t\troomlist was godot ID " + itos(_roomlist_godot_ID));
 	}
 }
-
-int PRooms::find_room_within(const Vector3 &p_pos, int p_previous_room_id) const {
-	float closest = FLT_MAX;
-	int room_id = p_previous_room_id;
-
-	for (int n = 0; n < _room_nodes.size(); n++) {
-		const LRoom *lroom = _room_nodes[n];
-		float dist = lroom->is_point_within(p_pos);
-		if (dist < closest) {
-			closest = dist;
-			room_id = n;
-		}
-	}
-
-	return room_id;
-}

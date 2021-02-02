@@ -42,6 +42,10 @@ void LRoom::clear() {
 	_first_static = 0;
 	_num_statics = 0;
 	_room_ID = -1;
+	
+	// max opposite extents .. note AABB storing size is rubbish in this aspect
+	_aabb.position = Vector3(FLT_MAX / 2, FLT_MAX / 2, FLT_MAX / 2);
+	_aabb.size = Vector3(-FLT_MAX, -FLT_MAX, -FLT_MAX);
 }
 
 void LRoom::show_debug(bool p_show) {

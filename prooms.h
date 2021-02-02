@@ -37,9 +37,10 @@ public:
 
 	Spatial *get_roomlist() const { return _roomlist_node; }
 
-	// helper function
-	int find_room_within(const Vector3 &p_pos, int p_previous_room_id) const;
 	LRoom *get_room(int p_id) {
+		return _room_nodes[p_id];
+	}
+	const LRoom *get_room(int p_id) const {
 		return _room_nodes[p_id];
 	}
 	int get_num_rooms() const { return _room_nodes.size(); }

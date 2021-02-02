@@ -99,6 +99,9 @@ void PConverter::convert(PRoomManager &p_room_manager) {
 	// show debug according to settings
 	p_room_manager.set_show_debug(p_room_manager.get_show_debug());
 
+	// create fast spatial lookup for rooms
+	p_room_manager._rooms_lookup.create(p_room_manager);
+	
 	// mark conversion complete
 	p_room_manager._converted = true;
 }
@@ -219,6 +222,7 @@ void PConverter::convert_room(PRoomManager &p_room_manager, Spatial *p_node) {
 
 	// points making up the room geometry, in world space, to create the convex hull
 	Vector<Vector3> room_pts;
+	bool manual_bound_found = false;
 
 	for (int n = 0; n < pLRoom->get_child_count(); n++) {
 		Spatial *child = Object::cast_to<Spatial>(pLRoom->get_child(n));
@@ -226,6 +230,8 @@ void PConverter::convert_room(PRoomManager &p_room_manager, Spatial *p_node) {
 		if (child) {
 			if (name_starts_with(child, "portal_") || name_starts_with(child, "lportal_")) {
 				// ignore
+			} else if (name_starts_with(child, "bound_")) {
+				manual_bound_found = convert_bound(pLRoom, child);
 			} else {
 				find_statics_recursive(p_room_manager, pLRoom, child, room_pts);
 			}
@@ -233,7 +239,9 @@ void PConverter::convert_room(PRoomManager &p_room_manager, Spatial *p_node) {
 	}
 
 	// create convex hull
-	convert_room_hull(pLRoom, room_pts);
+	if (!manual_bound_found) {
+		convert_room_hull(pLRoom, room_pts);
+	}
 }
 
 void PConverter::add_plane_if_unique(Lawn::LVector<Plane> &p_planes, const Plane &p) {
@@ -264,6 +272,28 @@ void PConverter::add_plane_if_unique(Lawn::LVector<Plane> &p_planes, const Plane
 	//	print("\t\t\t\tAdding bound plane : " + p);
 
 	p_planes.push_back(p);
+}
+
+// returns true if the bound was converted correctly
+bool PConverter::convert_bound(LRoom *p_room, Spatial *p_node) {
+	MeshInstance *mi = Object::cast_to<MeshInstance>(p_node);
+	if (!mi)
+		return false;
+
+	Vector<Vector3> points;
+	AABB aabb;
+	if (!_bound_findpoints(mi, points, aabb))
+		return false;
+
+	// add bound to lroom
+	p_room->_aabb.merge_with(aabb);
+	
+	// expand the room AABB .. NYI
+
+	// hide bounds after conversion
+	mi->hide();
+
+	return convert_room_hull(p_room, points);
 }
 
 bool PConverter::convert_room_hull(LRoom *p_room, const Vector<Vector3> &p_room_pts) {
@@ -309,8 +339,11 @@ void PConverter::find_statics_recursive(PRoomManager &p_room_manager, LRoom *p_l
 
 		// static
 		AABB aabb;
-		bound_findpoints(mi, room_pts, aabb);
+		_bound_findpoints(mi, room_pts, aabb);
 
+		// add bound to lroom
+		p_lroom->_aabb.merge_with(aabb);
+		
 		// better to create AABB manually?
 		//PStatic * stat =
 		p_room_manager._statics.request(mi, aabb, p_lroom->_room_ID);
@@ -330,7 +363,7 @@ void PConverter::find_statics_recursive(PRoomManager &p_room_manager, LRoom *p_l
 	}
 }
 
-void PConverter::bound_findpoints(MeshInstance *p_mi, Vector<Vector3> &r_room_pts, AABB &r_aabb) {
+bool PConverter::_bound_findpoints(MeshInstance *p_mi, Vector<Vector3> &r_room_pts, AABB &r_aabb) {
 	// max opposite extents .. note AABB storing size is rubbish in this aspect
 	r_aabb.position = Vector3(FLT_MAX / 2, FLT_MAX / 2, FLT_MAX / 2);
 	r_aabb.size = Vector3(-FLT_MAX, -FLT_MAX, -FLT_MAX);
@@ -341,7 +374,7 @@ void PConverter::bound_findpoints(MeshInstance *p_mi, Vector<Vector3> &r_room_pt
 		String sz;
 		sz = "MeshInstance '" + p_mi->get_name() + "' has no surfaces, ignoring";
 		WARN_PRINT(sz);
-		return;
+		return false;
 	}
 
 	Array arrays = rmesh->surface_get_arrays(0);
@@ -349,7 +382,7 @@ void PConverter::bound_findpoints(MeshInstance *p_mi, Vector<Vector3> &r_room_pt
 	// possible to have a meshinstance with no geometry .. don't want to crash
 	if (!arrays.size()) {
 		WARN_PRINT_ONCE("PConverter::bound_findpoints MeshInstance with no mesh, ignoring");
-		return;
+		return false;
 	}
 
 	PoolVector<Vector3> vertices = arrays[VS::ARRAY_VERTEX];
@@ -368,6 +401,8 @@ void PConverter::bound_findpoints(MeshInstance *p_mi, Vector<Vector3> &r_room_pt
 			r_aabb.size = Vector3(0, 0, 0);
 		}
 	}
+
+	return true;
 }
 
 void PConverter::convert_rooms_recursive(PRoomManager &p_room_manager, Spatial *p_node) {

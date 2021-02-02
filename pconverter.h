@@ -37,6 +37,7 @@ private:
 	void convert_rooms_recursive(PRoomManager &p_room_manager, Spatial *p_node);
 	void convert_room(PRoomManager &p_room_manager, Spatial *p_node);
 	void convert_portal(LRoom *p_room, MeshInstance *pMI);
+	bool convert_bound(LRoom *p_room, Spatial *p_node);
 	bool convert_room_hull(LRoom *p_room, const Vector<Vector3> &p_room_pts);
 
 	void find_statics_recursive(PRoomManager &p_room_manager, LRoom *p_lroom, Spatial *p_node, Vector<Vector3> &room_pts);
@@ -45,7 +46,7 @@ private:
 	// useful funcs
 	bool name_starts_with(const Node *pNode, String szSearch) const;
 	String find_name_after(Node *pNode, String szStart) const;
-	void bound_findpoints(MeshInstance *p_mi, Vector<Vector3> &r_room_pts, AABB &r_aabb);
+	bool _bound_findpoints(MeshInstance *p_mi, Vector<Vector3> &r_room_pts, AABB &r_aabb);
 	void add_plane_if_unique(Lawn::LVector<Plane> &p_planes, const Plane &p);
 
 	template <class T>
