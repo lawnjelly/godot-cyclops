@@ -1,3 +1,5 @@
+## NOTE - Cyclops is deprecated as of Godot 3.4, Rooms & Portals is now available as part of the standard Godot engine.
+
 # godot-cyclops 0.12
 Portal occlusion culling for Godot Engine 3.2 _(Feb 2nd 2021)_
 
